@@ -50,7 +50,7 @@ docker run --rm --gpus all nvidia/cuda:12.2.0-base nvidia-smi
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-org>/BM3D-AG.git
+git clone https://github.com/BMMission/BM3D-AG.git
 cd BM3D-AG
 ```
 
@@ -67,7 +67,7 @@ docker build -t bm3d-ag .
 Or pull from Docker Hub (if published):
 
 ```bash
-docker pull <your-dockerhub-username>/bm3d-ag:latest
+docker pull BMMission/bm3d-ag:latest
 ```
 
 ---
@@ -104,7 +104,7 @@ Explanation:
 * `--gpus all` → enables GPU acceleration.
 * `-v $(pwd)/output:/app/output` → saves generated assets to local `output/`.
 * `-v $(pwd)/input.txt:/app/input.txt` → reads prompts from local `input.txt`.
-
+* `bm3d-ag if you named it and build it from dockerfile if you pull from dockerhub BMMission/bm3d-ag fro prebuild image`
 ---
 
 ### 3. Output
@@ -144,13 +144,13 @@ output/ancient_ice_temple.glb
 If you publish to Docker Hub:
 
 ```bash
-docker pull <your-org>/bm3d-ag
+docker pull  BMMission/bm3d-ag
 ```
 
 Run it:
 
 ```bash
-docker run --rm --gpus all -v $(pwd)/output:/app/output -v $(pwd)/input.txt:/app/input.txt <your-org>/bm3d-ag
+docker run --rm --gpus all -v $(pwd)/output:/app/output -v $(pwd)/input.txt:/app/input.txt BMMission/bm3d-ag
 ```
 
 ---
