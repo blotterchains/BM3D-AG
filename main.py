@@ -1,33 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-BM3D-AG (Blender/Model 3D - Assets Generator)
-
-Description:
-    BM3D-AG is a game assets generator built on top of OpenAI's Shape-E.
-    It generates 3D models and preview animations from text prompts,
-    making it easy for game developers to create assets directly from
-    natural language descriptions.
-
-Features:
-    - Input prompts via input.txt (line by line).
-    - Generates 3D assets in both .OBJ and .GLB formats.
-    - Creates preview .GIF animations for each asset.
-    - Supports CUDA acceleration when available.
-    - Batch generation for multiple variations per prompt.
-
-Author:
-    Your Name <rezagina68@gmail.com>
-    Organization: BMMission
-    Repository: https://github.com/BMMission/BM3D-AG
-
-License:
-    MIT License. See LICENSE file for details.
-
-Version:
-    1.0.0
-"""
-
 import torch
 import os
 import hashlib
@@ -38,35 +8,26 @@ from shap_e.util.notebooks import decode_latent_mesh, create_pan_cameras, decode
 from PIL import Image
 import trimesh
 
+# ==========================
+# BM3D-AG Game Assets Generator
+# ==========================
 
-# ==========================
 # Device setup (CUDA if available)
-# ==========================
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# ==========================
 # Load models
-# ==========================
 print("🔄 Loading models...")
 xm = load_model('transmitter', device=device)
 model = load_model('text300M', device=device)
 diffusion = diffusion_from_config(load_config('diffusion'))
 
-# ==========================
-# Input & Output paths
-# ==========================
+# Input & Output
 INPUT_FILE = "input.txt"
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-
 def make_model_main(prompt: str):
-    """
-    Generate a 3D asset from a text prompt.
-
-    Args:
-        prompt (str): The text description of the desired asset.
-    """
+    """Generate a 3D asset from a text prompt"""
     print(f"\n⚡ Generating asset for prompt: {prompt}")
 
     # Generation parameters
@@ -79,7 +40,7 @@ def make_model_main(prompt: str):
     sigma_max = 180
     s_churn = 0
 
-    # Sample latents from the diffusion model
+    # Sample latents
     latents = sample_latents(
         batch_size=batch_size,
         model=model,
@@ -124,10 +85,6 @@ def make_model_main(prompt: str):
 
     print(f"🎉 Done! Saved {batch_size} assets for '{prompt}' in '{OUTPUT_DIR}/'")
 
-
-# ==========================
-# Main execution
-# ==========================
 if __name__ == "__main__":
     if not os.path.exists(INPUT_FILE):
         print(f"❌ No {INPUT_FILE} found. Please provide one with prompts (line by line).")
@@ -142,3 +99,4 @@ if __name__ == "__main__":
 
     for p in prompts:
         make_model_main(p)
+
